@@ -1,26 +1,33 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+// import ReactDOM from "react-dom";
+import { BrowserRouter, Route } from "react-router-dom";
+
+import Navbar from "./components/Nabvar";
+import FormCom from "./components/FormCom";
+import AllPost from "./components/AllPost";
+import Add from "./components/Add";
+import Edit from "./components/Edit";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <BrowserRouter>
+        <div className="container">
+          <Navbar />
+          <br />
+          <br />
+          <div className="row justify-content-center">
+            <div className="col-md-4">
+              <Route path="/" exact component={FormCom} />
+              <Route path="/addPost" exact component={Add} />
+              <Route path="/editPost/:id" exact component={Edit} />
+            </div>
+            <div className="col-md-8">
+              <AllPost />
+            </div>
+          </div>
+        </div>
+      </BrowserRouter>
     );
   }
 }
