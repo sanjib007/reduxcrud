@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fatchAllCategory } from "../action/index";
 
 class Category extends Component {
-  componentDidMount() {
-    this.props.fatchAllCategory();
-  }
   render() {
     if (!this.props.category) {
       return "";
@@ -20,7 +16,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { fatchAllCategory }
-)(Category);
+export default connect(mapStateToProps)(Category);

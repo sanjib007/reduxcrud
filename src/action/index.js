@@ -23,3 +23,12 @@ export const fatchAllCategory = () => async dispatch => {
     payload: response.data
   });
 };
+
+export const fatchNewPost = newNews => async dispatch => {
+  const response = await jsonPlaceholder.post("/insertNews", newNews);
+  console.log("action", response);
+  dispatch({
+    type: "FETCH_NEWPOST",
+    payload: response.data
+  });
+};

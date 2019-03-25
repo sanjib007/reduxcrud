@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fatchAllCountry } from "../action/index";
+// import { fatchAllCountry } from "../action/index";
 
 class Country extends Component {
-  componentDidMount() {
-    this.props.fatchAllCountry();
-  }
+  // componentDidMount() {
+
+  // }
   render() {
     if (!this.props.country) {
       return "";
@@ -22,7 +22,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { fatchAllCountry }
-)(Country);
+export default connect(mapStateToProps)(Country);

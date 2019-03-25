@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fatchNews } from "../action/index";
+// import { fatchNews } from "../action/index";
 import Category from "./Category";
 import Country from "./Country";
 
 class AllPost extends Component {
-  componentDidMount() {
-    this.props.fatchNews();
-  }
+  //   componentDidMount() {
+
+  //   }
   render() {
     if (!this.props.news.data) {
       return <span>No Data is found.</span>;
@@ -43,10 +43,7 @@ class AllPost extends Component {
 }
 
 const mapStateToProps = state => ({
-  news: state.news
+  news: state.news.newses
 });
 
-export default connect(
-  mapStateToProps,
-  { fatchNews }
-)(AllPost);
+export default connect(mapStateToProps)(AllPost);

@@ -1,7 +1,20 @@
-export default (state = [], action) => {
+const initState = {
+  newses: [],
+  aNews: {}
+};
+
+export default (state = initState, action) => {
   switch (action.type) {
     case "FETCH_NEWS":
-      return action.payload;
+      return {
+        ...state,
+        newses: action.payload
+      };
+    case "FETCH_NEWPOST":
+      return {
+        ...state,
+        aNews: action.payload
+      };
     default:
       return state;
   }

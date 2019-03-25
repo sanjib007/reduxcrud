@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 // import ReactDOM from "react-dom";
 import { BrowserRouter, Route } from "react-router-dom";
+import { connect } from "react-redux";
+import { fatchNews, fatchAllCategory, fatchAllCountry } from "./action";
 
 import Navbar from "./components/Nabvar";
 import FormCom from "./components/FormCom";
@@ -9,6 +11,11 @@ import Add from "./components/Add";
 import Edit from "./components/Edit";
 
 class App extends Component {
+  componentDidMount() {
+    this.props.fatchNews();
+    this.props.fatchAllCategory();
+    this.props.fatchAllCountry();
+  }
   render() {
     return (
       <BrowserRouter>
@@ -32,4 +39,7 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(
+  null,
+  { fatchNews, fatchAllCategory, fatchAllCountry }
+)(App);

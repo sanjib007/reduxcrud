@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { fatchNewPost } from "../action";
 class Add extends Component {
   constructor() {
     super();
@@ -10,36 +12,40 @@ class Add extends Component {
       category_id: "",
       country_id: ""
     };
-    // this.handleSubmit = this.heandleInpurchange.bind();
-    // this.heandleInpurchange = this.heandleInpurchange.bind();
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.heandleInpurchange = this.heandleInpurchange.bind(this);
   }
 
-  // heandleInpurchange(e) {
-  //     console.log(e.target.value);
-  //     // this.setState({ [e.target.name]: [e.target.value] });
-  // }
+  heandleInpurchange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
 
-  // handleSubmit(e) {
-  //     e.preventDefault;
-  //     this.props.dispatch({
-  //         type: "ADD_POST",
-  //         post: this.state
-  //     });
-  // }
+  handleSubmit(e) {
+    e.preventDefault();
+
+    const news = {
+      newsTitle: this.state.newsTitle,
+      description: this.state.description,
+      category_id: this.state.category_id,
+      country_id: this.state.country_id
+    };
+    console.log("add news state", news);
+    this.props.fatchNewPost(news);
+  }
 
   render() {
-    var setdata = "";
-    var setdata1 = "";
+    var categoryOption = "";
+    var countryOption = "";
 
     if (typeof this.props.categories !== "undefined") {
-      setdata = this.props.categories.map((aCategory, index) => (
+      categoryOption = this.props.categories.map((aCategory, index) => (
         <option key={index} value={aCategory.id}>
           {aCategory.newsType}
         </option>
       ));
     }
     if (typeof this.props.countries !== "undefined") {
-      setdata1 = this.props.countries.map((aCountry, index) => (
+      countryOption = this.props.countries.map((aCountry, index) => (
         <option key={index} value={aCountry.id}>
           {aCountry.name}
         </option>
@@ -61,7 +67,7 @@ class Add extends Component {
           </div>
           <div className="form-group">
             <label htmlFor="exampleInputEmail1">Description</label>
-            <input
+            <textarea
               type="text"
               className="form-control"
               name="description"
@@ -71,16 +77,35 @@ class Add extends Component {
           </div>
           <div className="form-group">
             <label htmlFor="exampleInputEmail1">Category Id</label>
-            <select className="form-control">
-              <option value="">--- select Category ----</option>
-              {setdata}
+            <select
+              className="form-control"
+              name="category_id"
+              onChange={e => this.heandleInpurchange(e)}
+              value={this.state.category_id}
+            >
+              <option value="">--- select country ----</option>
+              {categoryOption}
             </select>
+            {/* <select
+              className="form-control"
+              namd="category_id"
+              onChange={e => this.heandleInpurchange(e)}
+              value={this.state.category_id}
+            >
+              <option value="">--- select Category ----</option>
+              {categoryOption}
+            </select> */}
           </div>
           <div className="form-group">
             <label htmlFor="exampleInputEmail1">Country Id</label>
-            <select className="form-control">
+            <select
+              className="form-control"
+              name="country_id"
+              onChange={e => this.heandleInpurchange(e)}
+              value={this.state.country_id}
+            >
               <option value="">--- select country ----</option>
-              {setdata1}
+              {countryOption}
             </select>
           </div>
           <button type="submit" className="btn btn-primary">
@@ -94,8 +119,14 @@ class Add extends Component {
 const mapStateToProps = state => {
   return {
     countries: state.allCountry,
-    categories: state.allCategory
+    categories: state.allCategory,
+    aNews: state.news.aNews
   };
 };
-
-export default connect(mapStateToProps)(Add);
+Add.PropTypes = {
+  fatchNewPost: PropTypes.func.isRequired
+};
+export default connect(
+  mapStateToProps,
+  { fatchNewPost }
+)(Add);
