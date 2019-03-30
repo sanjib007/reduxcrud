@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { fatchNewPost } from "../action";
+import { fatchNewPost, fatchNews } from "../action";
 class Add extends Component {
   constructor() {
     super();
@@ -29,11 +28,24 @@ class Add extends Component {
       category_id: this.state.category_id,
       country_id: this.state.country_id
     };
-    console.log("add news state", news);
+
     this.props.fatchNewPost(news);
+    this.props.fatchNews();
+
+    this.setState({
+      newsTitle: "",
+      description: "",
+      category_id: "",
+      country_id: ""
+    });
   }
 
   render() {
+    console.log("add page", this.props.aNews);
+
+    if (this.props.aNews.message) {
+      alert(this.props.aNews.message);
+    }
     var categoryOption = "";
     var countryOption = "";
 
@@ -123,10 +135,8 @@ const mapStateToProps = state => {
     aNews: state.news.aNews
   };
 };
-Add.PropTypes = {
-  fatchNewPost: PropTypes.func.isRequired
-};
+
 export default connect(
   mapStateToProps,
-  { fatchNewPost }
+  { fatchNewPost, fatchNews }
 )(Add);

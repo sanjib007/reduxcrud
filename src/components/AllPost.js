@@ -1,17 +1,30 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Pagination from "react-js-pagination";
+
 // import { fatchNews } from "../action/index";
 import Category from "./Category";
 import Country from "./Country";
 
-class AllPost extends Component {
-  //   componentDidMount() {
+require("../../public/bootstrap-less/bootstrap/bootstrap.less");
 
-  //   }
+class AllPost extends Component {
+  constructor() {
+    super();
+
+    this.handlePageChange = this.handlePageChange.bind(this);
+  }
+
+  handlePageChange(pageNumber) {
+    console.log(`active page is`, pageNumber);
+    // this.setState({ activePage: pageNumber });
+  }
+
   render() {
     if (!this.props.news.data) {
       return <span>No Data is found.</span>;
     }
+
     const divStyle = {
       marginBottom: "20px"
     };
@@ -38,7 +51,21 @@ class AllPost extends Component {
       );
     });
 
-    return <div>{text}</div>;
+    return (
+      <div>
+        {text}
+
+        <br />
+        <br />
+        <Pagination
+          activePage={this.props.news.current_page}
+          itemsCountPerPage={this.props.news.per_page}
+          totalItemsCount={this.props.news.total}
+          pageRangeDisplayed={this.props.news.per_page}
+          onChange={() => this.handlePageChange}
+        />
+      </div>
+    );
   }
 }
 
